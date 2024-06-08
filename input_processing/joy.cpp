@@ -3,7 +3,6 @@
 #include <string.h>
 #include <fcntl.h>
 #include <linux/uinput.h>
-#include <linux/joystick.h>
 #include <time.h>
 #include <errno.h>
 #include <stdint.h>
@@ -13,7 +12,6 @@
 #include "joy.hpp"
 
 
-char JOY_PATH[] = "/dev/input/js2";
 int joy_fd = -1;
 
 void exitFunc(int fd)
@@ -25,12 +23,12 @@ void exitFunc(int fd)
   }
 }
 
-int initialize_joy()
+int initialize_joy(const char* device)
 {
     int rcode = 0;
 
     char joy_name[256] = "Unknown";
-    joy_fd = open(JOY_PATH, O_RDONLY | O_NONBLOCK); // open in non-blocking mode
+    joy_fd = open(device, O_RDONLY | O_NONBLOCK); // open in non-blocking mode
     if (joy_fd == -1)
     {
       printf("Failed to open joystick.\n");
@@ -43,11 +41,11 @@ int initialize_joy()
     return 0;
 }
 
-int read_joy_state(std::string& joy_state)
+int read_joy_state(JS_DATA_TYPE& js_event)
 {
-    joy_state.clear();
-    struct js_event joy_event;
-    struct JS_DATA_TYPE js_event;
+   // joy_state.clear();
+    //struct js_event joy_event;
+    //static struct JS_DATA_TYPE js_event;
     //int ret = read(joy_fd, &joy_event, sizeof(joy_event));
     //if (read(joy_fd, &joy_event, sizeof(joy_event)) != -1)
     //{
@@ -58,10 +56,9 @@ int read_joy_state(std::string& joy_state)
     if (ret != -1)
     {
         printf("js event: buttons %d x %d y %d ret %i \n", js_event.buttons, js_event.x, js_event.y, ret);
-        std::ostringstream stream;
-        stream << js_event.buttons << " " << js_event.x << " " << js_event.y;
-        joy_state = stream.str();
+        //std::ostringstream stream;
+        //stream << js_event.buttons << " " << js_event.x << " " << js_event.y;
+        //joy_state = stream.str();
     }
-
-    return 0;
+    return ret;
 }

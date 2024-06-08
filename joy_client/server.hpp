@@ -1,5 +1,6 @@
 #pragma once
+#include <linux/joystick.h>
 
 int open_socket(const char*);
 void close_connection();
-int send_command(std::string&);
+void send_command(JS_DATA_TYPE&);

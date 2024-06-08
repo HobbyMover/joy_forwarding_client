@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <server.hpp>
 
 using namespace std;
 
@@ -41,11 +42,9 @@ int open_socket(const char* ip)
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(portNum);
-    cout << "before inet!" << std::endl;
     inet_pton(AF_INET, ip, &server_addr.sin_addr);
-    cout << "after inet!" << std::endl;
 
-    cout << "try to connect to server first time!" << std::endl;
+    cout << "try to connect to server ip: " << ip <<" first time!" << std::endl;
     int ret = connect(client,(struct sockaddr *)&server_addr, sizeof(server_addr));
     int counter = 0;
     while (ret != 0)
@@ -67,7 +66,8 @@ void close_connection()
     close(client);
 }
 
-void send_command(std::string& cmd)
+void send_command(JS_DATA_TYPE& data)
 {
-    send(client, cmd.c_str(), cmd.size(), 0);
+   // send(client, cmd.c_str(), cmd.size(), 0);
+    send(client, &data, sizeof(data), 0);
 }
