@@ -3,7 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 
-int main(int argc, int** argv)
+int main(int argc, char** argv)
 {
     open_socket();
     if(initialize_joy() != 0)
