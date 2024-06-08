@@ -1,4 +1,3 @@
-#pragma once
 /*!
  * Simple chat program (client side).cpp - http://github.com/hassanyf
  * Version - 2.0.1
@@ -20,10 +19,9 @@ using namespace std;
 
 int client;
 
-int open_socket()
+int open_socket(const char* ip)
 {
     int portNum = 60123; // NOTE that the port number is same for both client and server
-    const char* ip = "192.168.0.195";
 
     struct sockaddr_in server_addr;
 
@@ -61,6 +59,7 @@ int open_socket()
         }
         ret = connect(client,(struct sockaddr *)&server_addr, sizeof(server_addr));
     }
+    return 0;
 }
 
 void close_connection()

@@ -21,8 +21,8 @@ message(sources="${sources}")
 ###############################################################################
 
 # add the data to the target, so it becomes visible in some IDE
-add_executable(target ${sources})
-target_include_directories(target PUBLIC input_processing joy_client)
+add_executable(bin ${sources})
+target_include_directories(bin PUBLIC input_processing joy_client)
 
 # just for example add some compiler flags
 #target_compile_options(target PUBLIC -std=c++14 -Wall -Wfloat-conversion)
